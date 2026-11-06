@@ -1,4 +1,3 @@
-import curses.ascii
 import secrets
 import string
 import math
@@ -26,4 +25,29 @@ def calculate_entropy(password):
 
     return entropy
 
-print(generate_password())
+
+if __name__ == "__main__":
+    print("===== Secure Password Generator =====")
+
+    while True:
+        length = int(input("Enter desired password length: "))
+
+        password = generate_password(length)
+        entropy = calculate_entropy(password)
+
+        print(f"\nGenerated Password: {password}")
+        print(f"Password Entropy: {entropy:.2f} bits")
+
+        if entropy < 50:
+            print("⚠️ Weak password! Consider using more characters.")
+        elif entropy < 80:
+            print("✅ Moderate password. Could be stronger.")
+        else:
+            print("🔒 Strong password! Very secure.")
+
+        user_choice = input("Are you happy with this password? (yes/no): ").strip().lower()
+        if user_choice == 'yes':
+            print("✅ Password finalized.")
+            break
+        else:
+            print("🔄 Generating a new password...\n")
